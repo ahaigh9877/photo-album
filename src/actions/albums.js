@@ -22,12 +22,15 @@ export function setAlbums(albums) {
 }
 
 // Here we want a dispatcher function in this action creator. We need THUNK.
+// This is middleware: functions that live between dispatched actions and the reducers.
 
 export function getAlbums() {
-  fetch("https://jsonplaceholder.typicode.com/albums")
-    .then(res => res.json())
-    .then(data => {
-      // we need some dispatcher function!
-      someHowDispatch(setAlbums(data));
-    });
+  return function(dispatch) {
+    fetch("https://jsonplaceholder.typicode.com/albums")
+      .then(res => res.json())
+      .then(data => {
+        // we need some dispatcher function!
+        dispatch(setAlbums(data));
+      });
+  };
 }

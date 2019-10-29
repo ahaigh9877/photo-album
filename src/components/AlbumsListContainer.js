@@ -3,16 +3,18 @@ import AlbumsList from "./AlbumsList";
 import { connect } from "react-redux";
 import { addAlbum } from "../actions/albums";
 import { setAlbums } from "../actions/albums";
+import { getAlbums } from "../actions/albums";
 
-const sleep = time =>
-  new Promise(resolve => {
-    setTimeout(() => resolve(`I waited for ${time} ms`), time);
-  });
+// const sleep = time =>
+//   new Promise(resolve => {
+//     setTimeout(() => resolve(`I waited for ${time} ms`), time);
+//   });
 
 class AlbumsListContainer extends React.Component {
   //state = {};
 
   componentDidMount() {
+    this.props.getAlbums();
     // sleep(2000).then(message => this.props.addAlbum(1, message));
 
     // sleep(3000).then(message => this.props.addAlbum(2, message));
@@ -34,9 +36,9 @@ class AlbumsListContainer extends React.Component {
     //   ]);
     // });
 
-    fetch("https://jsonplaceholder.typicode.com/albums")
-      .then(res => res.json())
-      .then(data => this.props.setAlbums(data));
+    // fetch("https://jsonplaceholder.typicode.com/albums")
+    //   .then(res => res.json())
+    //   .then(data => this.props.setAlbums(data));
 
     // console.log("AlbumsListContainer state just before dispatch: ", this.state);
     // console.log("AlbumsListContainer's props: ", this.props);
@@ -69,6 +71,7 @@ const mapStateToProps = reduxState => {
   console.log("Redux State", reduxState);
   return {
     // don't quite understand this line...
+    // Other props are imported at the bottom, in connect.
     albums: reduxState.albums
   };
 };
@@ -77,7 +80,7 @@ const mapStateToProps = reduxState => {
 // setAlbums in braces is shorthand for a mapDispatchToProps() function, which has the effect of not having to use dispatch in componentDidMount() above.
 export default connect(
   mapStateToProps,
-  { setAlbums }
+  { setAlbums, getAlbums }
 )(AlbumsListContainer);
 
 // (null,

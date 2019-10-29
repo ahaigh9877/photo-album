@@ -3,12 +3,15 @@ import "./App.css";
 import store from "./store";
 import { Provider } from "react-redux";
 import AlbumsListContainer from "./components/AlbumsListContainer";
+import { Route } from "react-router-dom";
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <AlbumsListContainer />
+        <Route exact path="/" component={AlbumsListContainer}>
+          <AlbumsListContainer />,
+        </Route>
       </div>
     </Provider>
   );
