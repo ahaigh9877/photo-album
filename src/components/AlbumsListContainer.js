@@ -1,9 +1,9 @@
 import React from "react";
 import AlbumsList from "./AlbumsList";
 import { connect } from "react-redux";
-import { addAlbum } from "../actions/albums";
-import { setAlbums } from "../actions/albums";
-import { getAlbums } from "../actions/albums";
+import { getAlbums, setAlbums, createAlbum } from "../actions/albums";
+
+import AddAlbumForm from "./AddAlbumForm";
 
 // const sleep = time =>
 //   new Promise(resolve => {
@@ -14,7 +14,10 @@ class AlbumsListContainer extends React.Component {
   //state = {};
 
   componentDidMount() {
-    this.props.getAlbums();
+    console.log("this.props.albums", this.props.albums);
+    if (this.props.albums.length < 1) {
+      this.props.getAlbums();
+    }
     // sleep(2000).then(message => this.props.addAlbum(1, message));
 
     // sleep(3000).then(message => this.props.addAlbum(2, message));
@@ -61,7 +64,12 @@ class AlbumsListContainer extends React.Component {
     if (!this.props.albums) {
       return <p>Loading...</p>;
     } else {
-      return <AlbumsList albums={this.props.albums} />;
+      return (
+        <div>
+          <AlbumsList albums={this.props.albums} />
+          <AddAlbumForm createAlbum={this.props.createAlbum} />
+        </div>
+      );
     }
   }
 }
@@ -80,7 +88,7 @@ const mapStateToProps = reduxState => {
 // setAlbums in braces is shorthand for a mapDispatchToProps() function, which has the effect of not having to use dispatch in componentDidMount() above.
 export default connect(
   mapStateToProps,
-  { setAlbums, getAlbums }
+  { setAlbums, getAlbums, createAlbum }
 )(AlbumsListContainer);
 
 // (null,

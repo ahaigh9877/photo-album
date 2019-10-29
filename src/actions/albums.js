@@ -14,6 +14,19 @@ export function addAlbum(id, title) {
   };
 }
 
+export function createAlbum(title) {
+  return function(dispatch) {
+    fetch("https://jsonplaceholder.typicode.com/albums", {
+      method: "post",
+      body: JSON.stringify({ title })
+    })
+      .then(res => res.json())
+      .then(data => {
+        dispatch(addAlbum(data.id, title));
+      });
+  };
+}
+
 export function setAlbums(albums) {
   return {
     type: SET_ALBUMS,
